@@ -1,5 +1,10 @@
 # neko-kaku
 
+## Introduction
+A simple to-do list using Vue, Vuex, Vuetify and Typescript.
+
+Demo: https://bit.ly/37fkFIn
+
 ## Project setup
 ```
 npm install

@@ -49,7 +49,6 @@ export default class ToDoApi {
 
       return response;
     } catch (err) {
-      console.error(err);
       return false;
     }
   }
