@@ -63,7 +63,7 @@ describe('toDoStore', () => {
       const commit = jest.fn();
       const dispatch = jest.fn();
       (<jest.Mock>ToDoApi.remove).mockResolvedValue(true);
-      await toDoStore.actions.remove({ dispatch, commit }, 'key');
+      await toDoStore.actions.remove({ dispatch, commit }, ['key']);
       expect(ToDoApi.remove as jest.Mock).toHaveBeenCalled();
       expect(commit).toHaveBeenCalledWith('setLoading', true);
       expect(dispatch).toHaveBeenCalledWith('fetch');

@@ -1,23 +1,28 @@
 <template>
-  <v-form id="addToList">
-    <v-container fluid>
-      <v-layout align-center justify-center row fill-height>
-        <v-flex xs12 sm5 md4 mx-2>
-          <v-text-field
-              label="Todo item"
-              placeholder="Description..."
-              v-model="item"
-            ></v-text-field>
-        </v-flex>
-        <v-flex xs12 sm2 md1 text-center>
+  <v-container fluid>
+    <v-layout align-center justify-center row fill-height>
+      <v-flex xs12 sm5 md4 mx-2>
+        <v-text-field
+            label="Todo item"
+            placeholder="Description..."
+            v-model="item"
+            maxlength="100"
+          ></v-text-field>
+      </v-flex>
+      <v-flex xs12 sm2 md2 text-center>
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
             <v-btn
             @click="addItem"
+            v-on="on"
             dark
             color="#BD4568">+ Add item</v-btn>
-        </v-flex>
-      </v-layout>
-    </v-container>
-  </v-form>
+          </template>
+          <span>You can add 50 items!</span>
+      </v-tooltip>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -51,6 +56,10 @@ export default Vue.extend({
       'add',
     ]),
     addItem() {
+      if (!this.item) {
+        return;
+      }
+
       this.add({ description: this.item });
     },
   },

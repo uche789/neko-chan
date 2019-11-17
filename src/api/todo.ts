@@ -25,14 +25,19 @@ export default class ToDoApi {
 
   static async add(todo: ToDo) {
     const todoEntry = { ...todo };
+    todoEntry.id = uuid();
+
     try {
       const response = await Promise.resolve().then(() => {
         let dailyToDos = localStorage.get('neko-todo');
 
+        if (dailyToDos && dailyToDos.todos.length === 50) {
+          return false;
+        }
+
         if (dailyToDos) {
           (dailyToDos as DailyToDo).todos.push(todoEntry);
         } else {
-          todoEntry.id = uuid();
           dailyToDos = {
             date: (new Date()).setHours(24),
             todos: [todoEntry],

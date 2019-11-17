@@ -61,7 +61,7 @@ export default Vue.extend({
     },
     errorMessage() {
       if (this.isAddErrorType) {
-        return 'Failed to add a new item to the list. Please try again.';
+        return 'An error occurred adding a new item to the list or you have reached the maximum number of items allowed. Please try again.';
       }
 
       if (this.isRemoveErrorType) {

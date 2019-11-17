@@ -62,16 +62,22 @@ const actions = {
     commit('setLoading', false);
     commit('setErrorState', !success ? 'update' : '');
   },
-  async remove({ dispatch, commit }: any, id: string) {
+  async remove({ dispatch, commit }: any, ids: Array<string>) {
     commit('setLoading', true);
-    const success = await ToDoApi.remove(id);
 
-    if (success) {
+    const results = [] as Promise<boolean>[];
+    ids.forEach((id) => {
+      results.push(ToDoApi.remove(id));
+    });
+
+    const successes = await Promise.all(results);
+
+    if (successes.indexOf(true) > -1) {
       await dispatch('fetch');
       return;
     }
     commit('setLoading', false);
-    commit('setErrorState', !success ? 'remove' : '');
+    commit('setErrorState', successes.indexOf(false) > -1 ? 'remove' : '');
   },
   async fetch({ dispatch, commit }: any) {
     commit('setLoading', true);
