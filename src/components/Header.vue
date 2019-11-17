@@ -16,10 +16,10 @@
 
     <v-flex mb-4>
       <h1 class="display-2 font-weight-bold text-lowercase mb-3">
-        Neko Kaku
+        Neko chan
       </h1>
       <p class="subheading font-weight-light font-italic">
-       Neko-chan's todo list!
+       We love cats and daily lists!
       </p>
     </v-flex>
 

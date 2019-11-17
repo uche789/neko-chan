@@ -10,7 +10,7 @@ export class ToDoState {
 
   loading: boolean = false;
 
-  error: boolean = true;
+  error: string = '';
 }
 
 const state = new ToDoState();
@@ -31,43 +31,54 @@ const mutations = {
   setLoading(state: ToDoState, value: boolean) {
     state.loading = value;
   },
-  setErrorState(state: ToDoState, value: boolean) {
+  setErrorState(state: ToDoState, value: string) {
     state.error = value;
   },
 };
 
 const actions = {
-  setError({ commit }: any, value: boolean) {
-    commit('setErrorState', value);
+  resetError({ commit }: any, value: boolean) {
+    commit('setErrorState', '');
   },
   async add({ dispatch, commit }: any, data: ToDo) {
     commit('setLoading', true);
     const success = await ToDoApi.add(data);
 
     if (success) {
-      dispatch('fetch');
+      await dispatch('fetch');
       return;
     }
     commit('setLoading', false);
-    commit('setErrorState', !success);
+    commit('setErrorState', !success ? 'add' : '');
+  },
+  async update({ dispatch, commit }: any, { id, done }: any) {
+    commit('setLoading', true);
+    const success = await ToDoApi.update(id, done);
+
+    if (success) {
+      await dispatch('fetch');
+      return;
+    }
+    commit('setLoading', false);
+    commit('setErrorState', !success ? 'update' : '');
   },
   async remove({ dispatch, commit }: any, id: string) {
     commit('setLoading', true);
     const success = await ToDoApi.remove(id);
 
     if (success) {
-      dispatch('fetch');
+      await dispatch('fetch');
       return;
     }
     commit('setLoading', false);
-    commit('setErrorState', !success);
+    commit('setErrorState', !success ? 'remove' : '');
   },
   async fetch({ commit }: any) {
     commit('setLoading', true);
     const todos = await ToDoApi.get();
 
     if (todos === 'error') {
-      commit('setErrorState', true);
+      commit('setErrorState', 'fetch');
     } else {
       commit('setToDoList', todos);
     }
@@ -87,7 +98,7 @@ const actions = {
       commit('setToDoList', []);
     }
     commit('setLoading', false);
-    commit('setErrorState', !success);
+    commit('setErrorState', !success ? 'refresh' : '');
   },
 };
 

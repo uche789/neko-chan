@@ -5,6 +5,7 @@ import localStorage from '../access/localStorage';
 export interface ToDo {
   id: string,
   description: string,
+  done: boolean,
 }
 
 export interface DailyToDo {
@@ -38,6 +39,21 @@ export default class ToDoApi {
           } as DailyToDo;
         }
 
+        return localStorage.set('neko-todo', dailyToDos);
+      });
+
+      return response;
+    } catch {
+      return false;
+    }
+  }
+
+  static async update(id: string, done: boolean) {
+    try {
+      const response = await Promise.resolve().then(() => {
+        const dailyToDos = localStorage.get('neko-todo');
+        const index = _.findIndex(dailyToDos.todos, { id });
+        dailyToDos.todos[index].done = done;
         return localStorage.set('neko-todo', dailyToDos);
       });
 
