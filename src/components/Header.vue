@@ -19,7 +19,7 @@
         Neko chan
       </h1>
       <p class="subheading font-weight-light font-italic">
-       We love cats and daily lists!
+       I love cats and daily lists!
       </p>
     </v-flex>
 

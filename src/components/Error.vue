@@ -3,31 +3,32 @@
         v-model="show"
         max-width="300px"
       >
-        <v-card>
-          <v-list-item>
-      <v-list-item-avatar>
-        <v-img
-           :src="require('../assets/kitty_sad.svg')"
-          ></v-img>
-      </v-list-item-avatar>
-      <v-list-item-content>
-        <v-list-item-title class="headline">Error</v-list-item-title>
-      </v-list-item-content>
-    </v-list-item>
-          <v-card-text>
-            {{errorMessage}}
-          </v-card-text>
-          <v-card-actions>
-            <v-btn
-              color="primary"
-              text
-              @click="resetError"
-            >
-              Close
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+    <v-card>
+      <v-list-item>
+        <v-list-item-avatar>
+          <v-img
+            contain
+            :src="require('../assets/kitty_sad.svg')"
+            ></v-img>
+        </v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-title class="headline">Error</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-card-text>
+        {{errorMessage}}
+      </v-card-text>
+      <v-card-actions>
+        <v-btn
+          color="primary"
+          text
+          @click="resetError"
+        >
+          Close
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script lang="ts">
@@ -84,7 +85,6 @@ export default Vue.extend({
   },
   watch: {
     error(newValue) {
-      console.log(newValue);
       this.show = !!newValue;
     },
   },

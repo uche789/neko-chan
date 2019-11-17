@@ -22,11 +22,11 @@ const getters = {
 };
 
 const mutations = {
-  setExpiryDate(state: ToDoState, data: DailyToDo) {
-    state.expiryDate = data.date;
+  setExpiryDate(state: ToDoState, date: number) {
+    state.expiryDate = date;
   },
-  setToDoList(state: ToDoState, data: DailyToDo) {
-    state.list = data.todos;
+  setToDoList(state: ToDoState, todos: Array<ToDo>) {
+    state.list = todos;
   },
   setLoading(state: ToDoState, value: boolean) {
     state.loading = value;
@@ -73,22 +73,29 @@ const actions = {
     commit('setLoading', false);
     commit('setErrorState', !success ? 'remove' : '');
   },
-  async fetch({ commit }: any) {
+  async fetch({ dispatch, commit }: any) {
     commit('setLoading', true);
-    const todos = await ToDoApi.get();
+    const dailyTodos = await ToDoApi.get();
 
-    if (todos === 'error') {
-      commit('setErrorState', 'fetch');
-    } else {
-      commit('setToDoList', todos);
+    if (dailyTodos && dailyTodos !== 'error') {
+      commit('setExpiryDate', dailyTodos.date);
+      commit('setToDoList', dailyTodos.todos);
+      dispatch('refresh');
+      return;
     }
+
+    if (dailyTodos === 'error') {
+      commit('setErrorState', 'fetch');
+    }
+
     commit('setLoading', false);
   },
-  async refreshStore({ commit, state }: any) {
+  async refresh({ commit, state }: any) {
     const date = new Date(state.expiryDate);
     const hasExpired = new Date() >= date;
 
-    if (hasExpired) {
+    if (!hasExpired) {
+      commit('setLoading', false);
       return;
     }
 

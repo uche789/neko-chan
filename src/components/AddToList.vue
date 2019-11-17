@@ -31,8 +31,20 @@ export default Vue.extend({
   }),
   computed: {
     ...mapState('todo', {
+      loading: state => (state as ToDoState).loading,
       error: state => (state as ToDoState).error,
     }),
+  },
+  watch: {
+    loading(newValue, oldValue) {
+      if (this.error) {
+        return;
+      }
+
+      if (newValue === false && oldValue === true) {
+        this.item = '';
+      }
+    },
   },
   methods: {
     ...mapActions('todo', [

@@ -21,61 +21,64 @@ beforeEach(() => {
 });
 
 describe('toDoStore', () => {
-  // describe('actions', () => {
-  //   it('fetch', async () => {
-  //     const commit = jest.fn();
-  //     (<jest.Mock>ToDoApi.get).mockResolvedValue(mockData);
-  //     await toDoStore.actions.fetch({ commit });
-  //     expect(ToDoApi.get as jest.Mock).toHaveBeenCalled();
-  //     expect(commit).toHaveBeenCalledWith('setLoading', true);
-  //     expect(commit).toHaveBeenCalledWith('setToDoList', mockData);
-  //     expect(commit).toHaveBeenCalledWith('setLoading', false);
-  //   });
+  describe('actions', () => {
+    it('fetch', async () => {
+      const commit = jest.fn();
+      const dispatch = jest.fn();
+      (<jest.Mock>ToDoApi.get).mockResolvedValue(mockData);
+      await toDoStore.actions.fetch({ dispatch, commit });
+      expect(ToDoApi.get as jest.Mock).toHaveBeenCalled();
+      expect(commit).toHaveBeenCalledWith('setLoading', true);
+      expect(commit).toHaveBeenCalledWith('setToDoList', mockData.todos);
+      expect(commit).toHaveBeenCalledWith('setExpiryDate', mockData.date);
+      expect(dispatch).toHaveBeenCalledWith('refresh');
+    });
 
-  //   it('fetch:failed', async () => {
-  //     const commit = jest.fn();
-  //     (<jest.Mock>ToDoApi.get).mockResolvedValue('error');
-  //     await toDoStore.actions.fetch({ commit });
-  //     expect(ToDoApi.get as jest.Mock).toHaveBeenCalled();
-  //     expect(commit).toHaveBeenCalledWith('setLoading', true);
-  //     expect(commit).toHaveBeenCalledWith('setErrorState', true);
-  //     expect(commit).toHaveBeenCalledWith('setLoading', false);
-  //   });
+    it('fetch:failed', async () => {
+      const commit = jest.fn();
+      const dispatch = jest.fn();
+      (<jest.Mock>ToDoApi.get).mockResolvedValue('error');
+      await toDoStore.actions.fetch({ dispatch, commit });
+      expect(ToDoApi.get as jest.Mock).toHaveBeenCalled();
+      expect(commit).toHaveBeenCalledWith('setLoading', true);
+      expect(commit).toHaveBeenCalledWith('setErrorState', 'fetch');
+      expect(commit).toHaveBeenCalledWith('setLoading', false);
+    });
 
-  //   it('add', async () => {
-  //     const data = {
-  //       id: 'key-key-1',
-  //       description: 'description-1-1',
-  //     } as ToDo;
-  //     const commit = jest.fn();
-  //     const dispatch = jest.fn();
-  //     (<jest.Mock>ToDoApi.add).mockResolvedValue(true);
-  //     await toDoStore.actions.add({ dispatch, commit }, data);
-  //     expect(ToDoApi.add as jest.Mock).toHaveBeenCalled();
-  //     expect(commit).toHaveBeenCalledWith('setLoading', true);
-  //     expect(dispatch).toHaveBeenCalledWith('fetch');
-  //   });
+    it('add', async () => {
+      const data = {
+        id: 'key-key-1',
+        description: 'description-1-1',
+      } as ToDo;
+      const commit = jest.fn();
+      const dispatch = jest.fn();
+      (<jest.Mock>ToDoApi.add).mockResolvedValue(true);
+      await toDoStore.actions.add({ dispatch, commit }, data);
+      expect(ToDoApi.add as jest.Mock).toHaveBeenCalled();
+      expect(commit).toHaveBeenCalledWith('setLoading', true);
+      expect(dispatch).toHaveBeenCalledWith('fetch');
+    });
 
-  //   it('remove', async () => {
-  //     const commit = jest.fn();
-  //     const dispatch = jest.fn();
-  //     (<jest.Mock>ToDoApi.remove).mockResolvedValue(true);
-  //     await toDoStore.actions.remove({ dispatch, commit }, 'key');
-  //     expect(ToDoApi.remove as jest.Mock).toHaveBeenCalled();
-  //     expect(commit).toHaveBeenCalledWith('setLoading', true);
-  //     expect(dispatch).toHaveBeenCalledWith('fetch');
-  //   });
+    it('remove', async () => {
+      const commit = jest.fn();
+      const dispatch = jest.fn();
+      (<jest.Mock>ToDoApi.remove).mockResolvedValue(true);
+      await toDoStore.actions.remove({ dispatch, commit }, 'key');
+      expect(ToDoApi.remove as jest.Mock).toHaveBeenCalled();
+      expect(commit).toHaveBeenCalledWith('setLoading', true);
+      expect(dispatch).toHaveBeenCalledWith('fetch');
+    });
 
-  //   it('update', async () => {
-  //     const commit = jest.fn();
-  //     const dispatch = jest.fn();
-  //     (<jest.Mock>ToDoApi.update).mockResolvedValue(true);
-  //     await toDoStore.actions.update({ dispatch, commit }, 'key-1', true);
-  //     expect(ToDoApi.update as jest.Mock).toHaveBeenCalled();
-  //     expect(commit).toHaveBeenCalledWith('setLoading', true);
-  //     expect(dispatch).toHaveBeenCalledWith('fetch');
-  //   });
-  // });
+    it('update', async () => {
+      const commit = jest.fn();
+      const dispatch = jest.fn();
+      (<jest.Mock>ToDoApi.update).mockResolvedValue(true);
+      await toDoStore.actions.update({ dispatch, commit }, { id: 'key-1', done: true });
+      expect(ToDoApi.update as jest.Mock).toHaveBeenCalled();
+      expect(commit).toHaveBeenCalledWith('setLoading', true);
+      expect(dispatch).toHaveBeenCalledWith('fetch');
+    });
+  });
 
   describe('getters', () => {
     it('getById', () => {

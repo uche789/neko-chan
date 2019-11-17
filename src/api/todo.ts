@@ -43,7 +43,8 @@ export default class ToDoApi {
       });
 
       return response;
-    } catch {
+    } catch (err) {
+      console.error(err);
       return false;
     }
   }
@@ -80,10 +81,7 @@ export default class ToDoApi {
 
   static async removeAll() {
     try {
-      const response = await Promise.resolve().then(() => {
-        const dailyToDos = localStorage.remove('neko-todo');
-        return localStorage.set('neko-todo', dailyToDos);
-      });
+      const response = await Promise.resolve().then(() => localStorage.remove('neko-todo'));
 
       return response;
     } catch {

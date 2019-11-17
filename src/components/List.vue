@@ -5,13 +5,12 @@
       class="mx-auto"
       tile
       >
-
       <template v-for="item in todos">
         <Item :item="item" :key="item.id"></Item>
       </template>
-      <v-card-text v-if="">
-
-          </v-card-text>
+      <v-card-text v-if="noTodos" class="text-center">
+          You have no todos at the moment.
+        </v-card-text>
       </v-card>
   </v-layout>
   </v-container>
@@ -37,8 +36,12 @@ export default class List extends Vue {
     this.todos = value;
   }
 
-  get todosCount() {
+  get noTodos() {
+    return this.todos.length === 0;
+  }
 
+  mounted() {
+    this.$store.dispatch('todo/fetch');
   }
 }
 </script>

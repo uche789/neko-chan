@@ -35,9 +35,5 @@ export default Vue.extend({
     Overlay,
     Error,
   },
-
-  data: () => ({
-    //
-  }),
 });
 </script>

@@ -1,7 +1,7 @@
 <template>
   <v-list-item>
     <v-list-item-content>
-      <v-list-item-title>{{description}}</v-list-item-title>
+      <v-list-item-title>{{item.description}}</v-list-item-title>
     </v-list-item-content>
   </v-list-item>
 </template>

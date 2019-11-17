@@ -1,7 +1,7 @@
 const browserLocalStorage = (() => {
   const set = (key: string, value: any) : boolean => {
     try {
-      window.localStorage.setItem(key, btoa(value));
+      window.localStorage.setItem(key, btoa(JSON.stringify(value)));
       return true;
     } catch (e) {
       return false;
@@ -11,7 +11,7 @@ const browserLocalStorage = (() => {
   const get = (key: string) : any => {
     try {
       const value = window.localStorage.getItem(key) as string;
-      return atob(value);
+      return !value ? value : JSON.parse(atob(value));
     } catch (e) {
       return null;
     }
