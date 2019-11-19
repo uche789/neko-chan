@@ -14,8 +14,8 @@
               v-if="item.done"/>
           </v-btn>
         </template>
-        <span v-if="!item.done">Click to complete task</span>
-        <span v-if="item.done">Click to deselect task</span>
+        <span v-if="!item.done">Mark as done</span>
+        <span v-if="item.done">Unmarkk</span>
       </v-tooltip>
     </v-list-item-action>
     <v-list-item-content>
