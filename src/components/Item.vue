@@ -15,7 +15,7 @@
           </v-btn>
         </template>
         <span v-if="!item.done">Mark as done</span>
-        <span v-if="item.done">Unmarkk</span>
+        <span v-if="item.done">Unmark</span>
       </v-tooltip>
     </v-list-item-action>
     <v-list-item-content>
