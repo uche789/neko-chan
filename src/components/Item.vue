@@ -20,7 +20,10 @@
     </v-list-item-action>
     <v-list-item-content>
       <v-list-item-subtitle
-      :class="{'font-italic': item.done}">{{item.description}}</v-list-item-subtitle>
+        :class="[{'is-strikethrough': item.done, 'font-italic': item.done}]"
+      >
+        {{item.description}}
+      </v-list-item-subtitle>
     </v-list-item-content>
     <v-list-item-action>
     <v-checkbox
@@ -61,3 +64,9 @@ export default class Item extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+.is-strikethrough {
+  text-decoration: line-through;
+}
+</style>

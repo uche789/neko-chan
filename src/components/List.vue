@@ -2,10 +2,11 @@
   <v-container>
     <v-layout row>
       <v-card
+      width="100%"
       max-width="600"
-      min-width="320"
       class="mx-auto"
       tile
+      flat
       >
 
        <v-toolbar
