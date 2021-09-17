@@ -1,12 +1,12 @@
 <template>
   <v-app>
-    <v-content>
+    <v-main>
       <Header/>
       <AddToList/>
       <List/>
       <Overlay/>
       <Error/>
-    </v-content>
+    </v-main>
     <v-footer>
       <v-layout text-center>
         <v-flex mb-5>
